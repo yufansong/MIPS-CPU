@@ -1,0 +1,107 @@
+20100014
+20050000
+3c051001
+20040001
+20090000
+200b0001
+200d0000
+200e0000
+01245020
+21490000
+01646020
+01846020
+01846020
+218b0000
+214d0000
+218e0000
+20840001
+1490fff6
+20100028
+01245020
+21490000
+01646020
+01846020
+01846020
+218b0000
+014c6820
+714d7002
+20840001
+1490fff6
+2010003c
+01245020
+21490000
+01646020
+01846020
+01846020
+218b0000
+714c6802
+718d7002
+20840001
+1490fff6
+
+
+main:
+begin_a:
+addi $s0,$zero,20 #limit
+addi $a1,$zero,0 #address
+lui $a1,0x1001  #lui $a1,0x1001 0x4000
+addi $a0,$zero, 1 # i=1-59
+addi $t1,$zero,0 #a[0]
+addi $t3,$zero,1 #b[0]
+addi $t5,$zero,0 #c
+addi $t6,$zero,0 #d
+
+loop_1:#a b  t2=a[i] t1=a[i-1]  a0=i a1 = address
+a1:
+add $t2,$t1,$a0 # a[i] = a[i-1] + i
+addi $t1,$t2,0	 # a[i-1] become a[i]
+b1:
+add $t4,$t3,$a0 # a[i] = a[i-1] + 3*i
+add $t4,$t4,$a0 
+add $t4,$t4,$a0 
+addi $t3,$t4,0	 # a[i-1] become a[i]
+c1:
+addi $t5,$t2,0
+d1:
+addi $t6,$t4,0
+all1:
+addi $a0,$a0,1 # i++
+bne $a0,$s0,loop_1 # 0 - 59. if i=60 than break
+
+addi $s0,$zero,40 #limit
+loop_2:#a b  t2=a[i] t1=a[i-1]  a0=i a1 = address
+a2:
+add $t2,$t1,$a0 # a[i] = a[i-1] + i
+addi $t1,$t2,0	 # a[i-1] become a[i]
+b2:
+add $t4,$t3,$a0 # a[i] = a[i-1] + 3*i
+add $t4,$t4,$a0 
+add $t4,$t4,$a0 
+addi $t3,$t4,0	 # a[i-1] become a[i]
+c2:
+add $t5,$t2,$t4
+d2:
+mul $t6,$t2,$t5
+all2:
+addi $a0,$a0,1 # i++
+bne $a0,$s0,loop_2 # 0 - 59. if i=60 than break
+
+
+addi $s0,$zero,60 #limit
+loop_3:#a b  t2=a[i] t1=a[i-1]  a0=i a1 = address
+a3:
+add $t2,$t1,$a0 # a[i] = a[i-1] + i
+addi $t1,$t2,0	 # a[i-1] become a[i]
+b3:
+add $t4,$t3,$a0 # a[i] = a[i-1] + 3*i
+add $t4,$t4,$a0 
+add $t4,$t4,$a0 
+addi $t3,$t4,0	 # a[i-1] become a[i]
+c3:
+mul $t5,$t2,$t4
+d3:
+mul $t6,$t4,$t5
+all3:
+addi $a0,$a0,1 # i++
+bne $a0,$s0,loop_3 # 0 - 59. if i=60 than break
+

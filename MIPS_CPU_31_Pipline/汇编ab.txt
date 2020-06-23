@@ -1,0 +1,44 @@
+main:
+begin_a:
+addi $t1,$zero,0 #a[0]
+addi $s0,$zero,60 #limit
+addi $a1,$zero,0 #address
+lui $a1,0x1001  #lui $a1,0x1001 0x4000
+addi $a0,$zero, 1 # i=1-59
+sw $t1,($a1)
+loop_a:#a b  t2=a[i] t1=a[i-1]  a0=i a1 = address
+add $t2,$t1,$a0 # a[i] = a[i-1] + i
+addi $a1,$a1,4 #address
+sw $t2,($a1) #save
+addi $a0,$a0,1 # i++
+addi $t1,$t2,0	 # a[i-1] become a[i]
+bne $a0,$s0,loop_a # 0 - 59. if i=60 than break
+
+
+begin_b:
+addi $t3,$zero,1 #a[0]
+addi $s0,$zero,60 #limit
+addi $a1,$zero,0 #address
+lui $a1,0x1001  #lui $a1,0x1001 0x4000
+addi $a1,$a1,0x100 #address
+addi $a0,$zero, 1 # i=1-59
+sw $t1,($a1)
+
+loop_b:#a b  t4=a[i] t3=a[i-1]  a0=i a1 = address
+add $t4,$t3,$a0 # a[i] = a[i-1] + 3*i
+add $t4,$t4,$a0 
+add $t4,$t4,$a0 
+addi $a1,$a1,4 #address
+sw $t4,($a1) #save
+addi $a0,$a0,1 # i++
+addi $t3,$t4,0	 # a[i-1] become a[i]
+bne $a0,$s0,loop_b # 0 - 59. if i=60 than break
+
+
+begin_c:
+#addi $s0,$zero,20#judge
+#addi $s1,$zero,40#judge
+#addi $s2,$zero,60#judge
+
+
+exit:
